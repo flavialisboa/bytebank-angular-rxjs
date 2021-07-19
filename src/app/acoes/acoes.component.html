@@ -6,8 +6,14 @@
   </div>
 
   <div class="td-page-wrapper" *ngIf="acoes$ | async as acoes ; else elseBlock">
+    <!--Async pipe subscribe para um Observable ou Promise e retorna o último valor emitido.
+    Quando o componente é destroyed, o async pipe unsubscribe automaticamente para evitar vazamento de memória.
+    ngIf = condicional booleana que inclui um template. Quando true, renderiza o template da clausa then,
+    Quando negativo, renderiza o template do else. O default é um template em branco.-->
     <div class="po-row">
       <div class="po-md-4" *ngFor="let acao of acoes">
+        <!--ngFor é uma diretiva. Renderiza o template de cada item da coleção.
+        A diretiva é alocada em um elemento, que se torna parente dos templates clonados.-->
         <app-card-acoes [acao]="acao"></app-card-acoes>
       </div>
     </div>

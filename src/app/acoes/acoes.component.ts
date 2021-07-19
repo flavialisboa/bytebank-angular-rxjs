@@ -6,6 +6,7 @@ import { merge, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, switchMap, tap } from 'rxjs/operators';
 
 const ESPERA_DIGITACAO = 300;
+//300ms no debounceTime para lazy loading e otimizar o servidor.
 
 @Component({
   selector: 'app-acoes',
@@ -27,14 +28,18 @@ export class AcoesComponent {
     }),
     tap(console.log),
     filter(
+      //Apenas filtra o item emitido pelo Observable com a emição daquele que satisfaz uma condição específica.
       (valorDigitado) => valorDigitado.length >= 3 || !valorDigitado.length
     ),
     distinctUntilChanged(),
+    //Apenas emitido quando o valor atual é diferente do anterior.
     switchMap((valorDigitado) => this.acoesService.getAcoes(valorDigitado)),
+    //Ignora os requests anteriores se um novo evento chegar. Obriga o retorno de um novo observable.
     tap(console.log)
   );
 
   acoes$ = merge(this.todasAcoes$, this.filtroPeloInput$);
+  //Transforma vários observables em um único.
 
   constructor(private acoesService: AcoesService) {}
 }

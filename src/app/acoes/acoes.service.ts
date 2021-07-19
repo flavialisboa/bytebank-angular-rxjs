@@ -14,9 +14,13 @@ export class AcoesService {
     return this.httpClient
       .get<AcoesAPI>('http://localhost:3000/acoes', { params })
       .pipe(
+        //Transformar dados no modelo.
         tap((valor) => console.log(valor)),
+        //Operador que olha para o valor do observable e executa algo com esse valor.
         pluck('payload'),
+        //Seleciona uma propriedade para emitir.
         map((acoes) =>
+        //Adiciona projeção para cada valor da source.
           acoes.sort((acaoA, acaoB) => this.ordenaPorCodigo(acaoA, acaoB))
         )
       );

@@ -11,6 +11,7 @@ export const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
+  //Método que cria um NgModule que contém todas as diretivas e as rotas, mas não inclui o Router service.
   exports: [RouterModule],
 })
 export class AcoesRoutingModule {}
